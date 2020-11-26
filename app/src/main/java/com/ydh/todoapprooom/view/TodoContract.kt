@@ -5,6 +5,7 @@ import com.ydh.todoapprooom.model.TodoModel
 interface TodoContract {
     interface View {
         fun onSuccessGetAllTodo(todo: List<TodoModel>)
+        fun onSuccessGetAllFavTodo(todo: List<TodoModel>)
         fun onSuccessInsertTodo(todoModel: TodoModel)
         fun onSuccessDeleteTodo(id: Long)
         fun onSuccessDeleteFavTodo(id: Long)

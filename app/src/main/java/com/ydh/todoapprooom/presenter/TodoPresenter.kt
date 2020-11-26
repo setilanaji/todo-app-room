@@ -60,8 +60,7 @@ class TodoPresenter(private val view: TodoContract.View, private val repository:
         val todo = mutableListOf<TodoModel>()
         executor.execute {
              todo.addAll(repository.getAllTodo())
-            println(" DB ==== $todo")
-//            view.onSuccessGetAllTodo(todo)
+            view.onSuccessGetAllFavTodo(todo)
         }
         print("getFav $todo")
         return todo

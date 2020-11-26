@@ -48,6 +48,8 @@ class TodoFavAdapter(
         fun onClick(todoModel: TodoModel)
         fun onDelete(id: Long)
         fun onChange(todoModel: TodoModel)
+        fun onFavClick(todoModel: TodoModel)
+        fun onDelFavClick(todoModel: TodoModel)
     }
 
     override fun onBindViewHolder(holder: MyViewHolder, position: Int) {

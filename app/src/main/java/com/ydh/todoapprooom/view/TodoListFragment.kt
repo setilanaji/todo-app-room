@@ -67,6 +67,10 @@ class TodoListFragment : Fragment(), TodoContract.View, TodoAdapter.TodoListener
         adapter.setData(todo.toMutableList())
     }
 
+    override fun onSuccessGetAllFavTodo(todo: List<TodoModel>) {
+
+    }
+
     override fun onSuccessInsertTodo(todoModel: TodoModel) {
         requireActivity().runOnUiThread {
             Toast.makeText(context, "new task has been added", Toast.LENGTH_SHORT).show()
@@ -100,6 +104,7 @@ class TodoListFragment : Fragment(), TodoContract.View, TodoAdapter.TodoListener
     }
 
     override fun onFavClick(todoModel: TodoModel) {
+        todoModel.favStatus = true
         offlinePresenter.insertFavTodo(todoModel)
     }
 

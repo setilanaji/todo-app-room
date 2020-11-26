@@ -11,6 +11,7 @@ data class TodoEntity(
     @PrimaryKey(autoGenerate = true) val id: Long = 0,
     @ColumnInfo(name = "task") var task: String = "",
     @ColumnInfo(name = "status") var status: Boolean = false,
+    @ColumnInfo(name = "fav_status") var favStatus: Boolean = false,
 )
 
-fun TodoEntity.toModel() : TodoModel = TodoModel(id, task, status)
+fun TodoEntity.toModel() : TodoModel = TodoModel(id, task, status, favStatus)
