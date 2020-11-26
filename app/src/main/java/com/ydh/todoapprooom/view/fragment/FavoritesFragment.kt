@@ -5,6 +5,9 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
+import androidx.recyclerview.widget.ItemTouchHelper
+import androidx.recyclerview.widget.RecyclerView
 import com.ydh.todoapprooom.data.TodoRepository
 import com.ydh.todoapprooom.data.local.LocalDB
 import com.ydh.todoapprooom.data.local.TodoDAO
@@ -16,6 +19,8 @@ import com.ydh.todoapprooom.databinding.FragmentFavoritesBinding
 import com.ydh.todoapprooom.model.TodoModel
 import com.ydh.todoapprooom.presenter.TodoPresenter
 import com.ydh.todoapprooom.presenter.TodoContract
+import com.ydh.todoapprooom.util.SwipeToDelete
+import com.ydh.todoapprooom.view.adapter.TodoAdapter
 import com.ydh.todoapprooom.view.adapter.TodoFavAdapter
 
 class FavoritesFragment : Fragment(), TodoContract.View, TodoFavAdapter.TodoListener {
@@ -37,17 +42,17 @@ class FavoritesFragment : Fragment(), TodoContract.View, TodoFavAdapter.TodoList
     ): View? {
         binding.run {
             rvFavorite.adapter = adapter
-//            val swipeHandler = object : SwipeToDelete(requireContext()) {
-//                override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
-//                    val adapter = rvTodo.adapter as TodoAdapter
-//                    val pos = viewHolder.adapterPosition
-//                    val item = adapter.getData(pos)
-//                    presenter.deleteTodo(item)
-//
-//                }
-//            }
-//            val itemTouchHelper = ItemTouchHelper(swipeHandler)
-//            itemTouchHelper.attachToRecyclerView(rvTodo)
+            val swipeHandler = object : SwipeToDelete(requireContext()) {
+                override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
+                    val adapter = rvFavorite.adapter as TodoAdapter
+                    val pos = viewHolder.adapterPosition
+                    val item = adapter.getData(pos)
+                    presenter.deleteTodo(item)
+
+                }
+            }
+            val itemTouchHelper = ItemTouchHelper(swipeHandler)
+            itemTouchHelper.attachToRecyclerView(rvFavorite)
         }
 
 
@@ -80,15 +85,20 @@ class FavoritesFragment : Fragment(), TodoContract.View, TodoFavAdapter.TodoList
     }
 
     override fun onSuccessDeleteTodo(id: Long) {
-        TODO("Not yet implemented")
+        adapter.deleteTodo(id)
     }
 
     override fun onSuccessDeleteFavTodo(id: Long) {
-        TODO("Not yet implemented")
+        requireActivity().runOnUiThread {
+            Toast.makeText(context, "task has been deleted from favorite", Toast.LENGTH_SHORT).show()
+        }
     }
 
     override fun onSuccessUpdateTodo(todoModel: TodoModel) {
-        TODO("Not yet implemented")
+        requireActivity().runOnUiThread {
+            todoModel.favStatus = true
+            adapter.updateTodo(todoModel)
+        }
     }
 
     override fun onClick(todoModel: TodoModel) {
@@ -98,16 +108,18 @@ class FavoritesFragment : Fragment(), TodoContract.View, TodoFavAdapter.TodoList
     override fun onDelete(id: Long) {
         TODO("Not yet implemented")
     }
-
     override fun onChange(todoModel: TodoModel) {
-        TODO("Not yet implemented")
+        presenter.updateTodo(todoModel)
+        offlinePresenter.updateFavTodo(todoModel)
     }
 
     override fun onFavClick(todoModel: TodoModel) {
-        TODO("Not yet implemented")
+        todoModel.favStatus = true
+        offlinePresenter.insertFavTodo(todoModel)
     }
 
     override fun onDelFavClick(todoModel: TodoModel) {
-        TODO("Not yet implemented")
+        offlinePresenter.deleteFavTodo(todoModel)
+        onSuccessDeleteTodo(todoModel.id)
     }
 }

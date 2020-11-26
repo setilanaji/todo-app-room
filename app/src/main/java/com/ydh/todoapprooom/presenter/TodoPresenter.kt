@@ -153,8 +153,10 @@ class TodoPresenter(private val view: TodoContract.View, private val repository:
                 if (response.isSuccessful) {
                     if (response.body() != null) {
                         response.body()?.let {
+                            val edited = it.data
+                            edited.favStatus = todoModel.favStatus
                             view.onSuccessUpdateTodo(
-                                it.data)
+                                edited)
                         }
                     } else {
                         Throwable(message = "Responsenya adalah null")

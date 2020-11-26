@@ -27,6 +27,13 @@ class TodoFavAdapter(
         notifyDataSetChanged()
     }
 
+    fun updateTodo(todoModel: TodoModel) {
+        val index = favTodoList.indexOfFirst { it.id == todoModel.id }
+        if (index != -1) {
+            favTodoList[index] = todoModel
+            notifyItemChanged(index)
+        }
+    }
     fun deleteTodo(id: Long) {
         val index = favTodoList.indexOfFirst { it.id == id }
         if (index != -1) {
@@ -68,6 +75,24 @@ class TodoFavAdapter(
 
         init {
             this.binding = itemBinding
+            itemBinding.ivFavTodo.setOnClickListener{
+                if (itemBinding.ivFavTodo.isChecked){
+                    listener.onFavClick(itemBinding.todo!!)
+                }else{
+                    listener.onDelFavClick(itemBinding.todo!!)
+                }
+            }
+
+            itemBinding.ivStatus.setOnClickListener{
+                val item = itemBinding.todo!!
+                if (itemBinding.ivStatus.isChecked){
+                    item.status = true
+                    listener.onChange(item)
+                }else{
+                    item.status = false
+                    listener.onChange(item)
+                }
+            }
         }
 
     }

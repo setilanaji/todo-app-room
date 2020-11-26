@@ -23,8 +23,6 @@ class TodoAdapter(
     }
 
     fun setData(item: MutableList<TodoModel>){
-        println(item)
-        println("set Data")
         this.todoList = item
         notifyDataSetChanged()
     }

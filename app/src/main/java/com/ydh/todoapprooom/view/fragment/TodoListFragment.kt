@@ -97,7 +97,7 @@ class TodoListFragment : Fragment(), TodoContract.View, TodoAdapter.TodoListener
 
     override fun onSuccessDeleteFavTodo(id: Long) {
         requireActivity().runOnUiThread {
-            Toast.makeText(context, "task has been deleted", Toast.LENGTH_SHORT).show()
+            Toast.makeText(context, "task has been deleted from favorite", Toast.LENGTH_SHORT).show()
         }
     }
 
