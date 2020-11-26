@@ -7,29 +7,6 @@ import retrofit2.Call
 class TodoRemoteRepository(private val service: TodoService): TodoRepository {
     override fun getAllTodo(): List<TodoModel> {
         TODO("Not yet implemented")
-
-
-//        var todo = mutableListOf<TodoModel>()
-//
-//            TodoClient.todoApiService.getAllTodo().enqueue(object : Callback<TodoResponse> {
-//                override fun onResponse(
-//                    call: Call<TodoResponse>,
-//                    response: Response<TodoResponse>
-//                ) {
-//                    if (response.isSuccessful){
-//                        todo = response.body()?.data as MutableList<TodoModel>
-//                    }
-//
-//                }
-//
-//                override fun onFailure(call: Call<TodoResponse>, t: Throwable) {
-//                    Log.e("getAllTodo", t.toString()
-//                    )
-//                }
-//
-//            })
-//
-//        return todo
     }
 
     override fun insertTodo(todoModel: TodoModel): TodoModel {

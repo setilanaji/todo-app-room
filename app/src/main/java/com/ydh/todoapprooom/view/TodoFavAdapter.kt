@@ -9,10 +9,10 @@ import com.ydh.todoapprooom.R
 import com.ydh.todoapprooom.databinding.ItemTodoBinding
 import com.ydh.todoapprooom.model.TodoModel
 
-class TodoAdapter(
+class TodoFavAdapter(
         private val context: Context, private val listener: TodoListener
-) : RecyclerView.Adapter<TodoAdapter.MyViewHolder>() {
-    private var todoList = mutableListOf<TodoModel>()
+) : RecyclerView.Adapter<TodoFavAdapter.MyViewHolder>() {
+    private var favTodoList = mutableListOf<TodoModel>()
 
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MyViewHolder {
@@ -23,26 +23,24 @@ class TodoAdapter(
     }
 
     fun setData(item: MutableList<TodoModel>){
-        println(item)
-        println("set Data")
-        this.todoList = item
+        this.favTodoList = item
         notifyDataSetChanged()
     }
 
     fun deleteTodo(id: Long) {
-        val index = todoList.indexOfFirst { it.id == id }
+        val index = favTodoList.indexOfFirst { it.id == id }
         if (index != -1) {
-            todoList.removeAt(index)
+            favTodoList.removeAt(index)
             notifyItemRemoved(index)
         }
     }
 
     fun getData(position: Int): TodoModel{
-        return todoList[position]
+        return favTodoList[position]
     }
 
     fun addTodo(todoModel: TodoModel) {
-        todoList.add(0, todoModel)
+        favTodoList.add(0, todoModel)
         notifyItemInserted(0)
     }
 
@@ -50,16 +48,14 @@ class TodoAdapter(
         fun onClick(todoModel: TodoModel)
         fun onDelete(id: Long)
         fun onChange(todoModel: TodoModel)
-        fun onFavClick(todoModel: TodoModel)
-        fun onDelFavClick(todoModel: TodoModel)
     }
 
     override fun onBindViewHolder(holder: MyViewHolder, position: Int) {
-        holder.itemBinding.todo = todoList[position]
+        holder.itemBinding.todo = favTodoList[position]
     }
 
     override fun getItemCount(): Int {
-        return todoList.size
+        return favTodoList.size
     }
 
     class MyViewHolder(val itemBinding: ItemTodoBinding,
@@ -69,13 +65,6 @@ class TodoAdapter(
 
         init {
             this.binding = itemBinding
-            itemBinding.ivFavTodo.setOnClickListener{
-                if (itemBinding.ivFavTodo.isChecked){
-                    listener.onFavClick(itemBinding.todo!!)
-                }else{
-                    listener.onDelFavClick(itemBinding.todo!!)
-                }
-            }
         }
 
     }

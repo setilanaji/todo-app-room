@@ -41,12 +41,14 @@
             tools:text="@{todo.task}"/>
 
 
-        <ImageView
+        <CheckBox
             android:id="@+id/ivFavTodo"
             android:layout_width="48dp"
             android:layout_height="48dp"
-            android:src="@drawable/ic_un_favorite"
+            android:background="@drawable/selector_fav"
             android:padding="8dp"
+            android:button="@null"
+            android:checked="@{todo.favStatus}"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@id/tvTodo"

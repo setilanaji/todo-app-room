@@ -7,11 +7,15 @@ interface TodoContract {
         fun onSuccessGetAllTodo(todo: List<TodoModel>)
         fun onSuccessInsertTodo(todoModel: TodoModel)
         fun onSuccessDeleteTodo(id: Long)
+        fun onSuccessDeleteFavTodo(id: Long)
         fun onSuccessUpdateTodo(todoModel: TodoModel)
     }
 
     interface Presenter {
-        fun getAllTodo()
+        fun getAllTodo(list: List<TodoModel>)
+        fun getAllFavTodo(): List<TodoModel>
+        fun insertFavTodo(todoModel: TodoModel)
+        fun deleteFavTodo(todoModel: TodoModel)
         fun insertTodo(todoModel: TodoModel)
         fun deleteTodo(todoModel: TodoModel)
         fun updateTodo(todoModel: TodoModel)

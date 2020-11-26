@@ -1,16 +1,17 @@
 package com.ydh.todoapprooom.view
 
-import android.graphics.Color
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
+import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.RecyclerView
-import com.google.android.material.snackbar.Snackbar
-import com.ydh.todoapprooom.R
 import com.ydh.todoapprooom.data.TodoRepository
+import com.ydh.todoapprooom.data.local.LocalDB
+import com.ydh.todoapprooom.data.local.TodoDAO
+import com.ydh.todoapprooom.data.local.TodoRoomRepository
 import com.ydh.todoapprooom.data.remote.TodoClient
 import com.ydh.todoapprooom.data.remote.TodoRemoteRepository
 import com.ydh.todoapprooom.data.remote.TodoService
@@ -21,11 +22,17 @@ import com.ydh.todoapprooom.util.SwipeToDelete
 
 class TodoListFragment : Fragment(), TodoContract.View, TodoAdapter.TodoListener {
 
+    private val dao: TodoDAO by lazy { LocalDB.getDatabase(requireContext()).dao() }
     private val binding by lazy { FragmentTodoListBinding.inflate(layoutInflater) }
     private val adapter by lazy { TodoAdapter(requireContext(), this) }
     private val service: TodoService by lazy { TodoClient.todoApiService }
     private val repository: TodoRepository by lazy { TodoRemoteRepository(service) }
+    private val offlineRepository: TodoRepository by lazy { TodoRoomRepository(dao) }
     private val presenter: TodoContract.Presenter by lazy { TodoPresenter(this, repository) }
+    private val offlinePresenter: TodoContract.Presenter by lazy { TodoPresenter(
+        this,
+        offlineRepository
+    ) }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -40,21 +47,6 @@ class TodoListFragment : Fragment(), TodoContract.View, TodoAdapter.TodoListener
                     val item = adapter.getData(pos)
                     presenter.deleteTodo(item)
 
-//                    val snack =
-//                        view?.let {
-//                            Snackbar.make(
-//                                it,
-//                                "Item was removed from the list.",
-//                                Snackbar.LENGTH_LONG
-//                            )
-//                        }
-//                    snack?.setAction("UNDO") {
-//                        adapter.restoreItem(item, pos)
-//                        rvUsers.scrollToPosition(pos)
-//                    }
-//
-//                    snack?.setActionTextColor(Color.BLUE)
-//                    snack?.show()
                 }
             }
             val itemTouchHelper = ItemTouchHelper(swipeHandler)
@@ -66,22 +58,30 @@ class TodoListFragment : Fragment(), TodoContract.View, TodoAdapter.TodoListener
 
     override fun onResume() {
         super.onResume()
+        val todo = offlinePresenter.getAllFavTodo()
 
-        presenter.getAllTodo()
+        presenter.getAllTodo(todo)
     }
 
     override fun onSuccessGetAllTodo(todo: List<TodoModel>) {
         adapter.setData(todo.toMutableList())
-
     }
 
     override fun onSuccessInsertTodo(todoModel: TodoModel) {
-        TODO("Not yet implemented")
+        requireActivity().runOnUiThread {
+            Toast.makeText(context, "new task has been added", Toast.LENGTH_SHORT).show()
+        }
+
     }
 
     override fun onSuccessDeleteTodo(id: Long) {
         adapter.deleteTodo(id)
     }
+
+    override fun onSuccessDeleteFavTodo(id: Long) {
+        requireActivity().runOnUiThread {
+            Toast.makeText(context, "task has been deleted", Toast.LENGTH_SHORT).show()
+        }    }
 
     override fun onSuccessUpdateTodo(todoModel: TodoModel) {
         TODO("Not yet implemented")
@@ -92,10 +92,18 @@ class TodoListFragment : Fragment(), TodoContract.View, TodoAdapter.TodoListener
     }
 
     override fun onDelete(id: Long) {
-        TODO("Not yet implemented")
+
     }
 
     override fun onChange(todoModel: TodoModel) {
         TODO("Not yet implemented")
+    }
+
+    override fun onFavClick(todoModel: TodoModel) {
+        offlinePresenter.insertFavTodo(todoModel)
+    }
+
+    override fun onDelFavClick(todoModel: TodoModel) {
+        offlinePresenter.deleteFavTodo(todoModel)
     }
 }

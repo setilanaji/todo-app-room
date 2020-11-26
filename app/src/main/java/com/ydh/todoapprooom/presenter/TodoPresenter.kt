@@ -15,12 +15,8 @@ class TodoPresenter(private val view: TodoContract.View, private val repository:
 
     private val executor by lazy { Executors.newFixedThreadPool(4) }
 
-    override fun getAllTodo() {
-//        executor.execute {
-//            val todo = repository.getAllTodo()
-//            view.onSuccessGetAllTodo(todo)
-//        }
-
+    override fun getAllTodo(list: List<TodoModel>) {
+        println("getallTodo $list")
             repository.getAllTodoOnline().enqueue(object : Callback<TodoResponse> {
                 override fun onResponse(
                     call: Call<TodoResponse>,
@@ -29,8 +25,18 @@ class TodoPresenter(private val view: TodoContract.View, private val repository:
                     if (response.isSuccessful) {
                         if (response.body() != null) {
                             response.body()?.let {
+                                val todoEdited = mutableListOf<TodoModel>()
+
+                                for (item in it.data){
+                                    for (x in list){
+                                        if (item.id == x.id ){
+                                            item.favStatus = true
+                                        }
+                                    }
+                                    todoEdited.add(item)
+                                }
                                 view.onSuccessGetAllTodo(
-                                    it.data.toList()
+                                    todoEdited.toList()
                                 )
                             }
                         } else {
@@ -46,13 +52,38 @@ class TodoPresenter(private val view: TodoContract.View, private val repository:
 
                 }
             })
-        }
 
-    override fun insertTodo(todoModel: TodoModel) {
+
+    }
+
+    override fun getAllFavTodo(): List<TodoModel> {
+        val todo = mutableListOf<TodoModel>()
+        executor.execute {
+             todo.addAll(repository.getAllTodo())
+            println(" DB ==== $todo")
+//            view.onSuccessGetAllTodo(todo)
+        }
+        print("getFav $todo")
+        return todo
+    }
+
+    override fun insertFavTodo(todoModel: TodoModel) {
         executor.execute {
             val todo = repository.insertTodo(todoModel)
             view.onSuccessInsertTodo(todo)
-        }    }
+        }
+    }
+
+    override fun deleteFavTodo(todoModel: TodoModel) {
+        executor.execute {
+            val todoId = repository.deleteTodo(todoModel)
+            view.onSuccessDeleteFavTodo(todoId)
+        }
+    }
+
+    override fun insertTodo(todoModel: TodoModel) {
+
+    }
 
     override fun deleteTodo(todoModel: TodoModel) {
         repository.deleteTodoById(todoModel.id).enqueue(object : Callback<DeleteTodoResponse> {
@@ -79,10 +110,7 @@ class TodoPresenter(private val view: TodoContract.View, private val repository:
 
             }
         })
-//        executor.execute {
-//            val todoId = repository.deleteTodo(todoModel)
-//            view.onSuccessDeleteTodo(todoId)
-//        }
+
     }
 
     override fun updateTodo(todoModel: TodoModel) {

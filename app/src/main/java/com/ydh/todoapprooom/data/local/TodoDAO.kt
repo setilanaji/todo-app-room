@@ -4,7 +4,7 @@ import androidx.room.*
 
 @Dao
 interface TodoDAO {
-    @Query("SELECT * FROM todos ORDER BY ID DESC")
+    @Query("SELECT * FROM todo ORDER BY ID DESC")
     fun getAllTodo(): List<TodoEntity>
 
     @Insert(onConflict = OnConflictStrategy.IGNORE)
