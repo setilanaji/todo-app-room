@@ -1,6 +1,6 @@
-package com.ydh.todoapprooom
+package com.ydh.todoapprooom.view
 
-import com.ydh.todoapprooom.TodoModel
+import com.ydh.todoapprooom.model.TodoModel
 
 interface TodoContract {
     interface View {

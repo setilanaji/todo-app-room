@@ -1,6 +1,7 @@
-package com.ydh.todoapprooom
+package com.ydh.todoapprooom.model
 
 import android.os.Parcelable
+import com.ydh.todoapprooom.data.local.TodoEntity
 import kotlinx.android.parcel.Parcelize
 
 @Parcelize

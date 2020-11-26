@@ -1,4 +1,4 @@
-package com.ydh.todoapprooom
+package com.ydh.todoapprooom.data.remote
 
 import com.google.gson.Gson
 import com.google.gson.GsonBuilder

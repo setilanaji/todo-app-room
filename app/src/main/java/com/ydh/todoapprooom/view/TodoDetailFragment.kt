@@ -1,18 +1,19 @@
-package com.ydh.todoapprooom
+package com.ydh.todoapprooom.view
 
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import com.ydh.todoapprooom.R
 
-class ProfileFragment : Fragment() {
+class TodoDetailFragment : Fragment() {
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_profile, container, false)
+        return inflater.inflate(R.layout.fragment_todo_detail, container, false)
     }
 }

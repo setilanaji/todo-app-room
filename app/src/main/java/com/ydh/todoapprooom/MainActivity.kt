@@ -5,6 +5,9 @@ import android.os.Bundle
 import android.view.MenuItem
 import androidx.viewpager2.widget.ViewPager2
 import com.ydh.todoapprooom.databinding.ActivityMainBinding
+import com.ydh.todoapprooom.view.FavoritesFragment
+import com.ydh.todoapprooom.view.ProfileFragment
+import com.ydh.todoapprooom.view.TodoFragment
 import kotlinx.android.synthetic.main.activity_main.*
 
 class MainActivity : AppCompatActivity() {

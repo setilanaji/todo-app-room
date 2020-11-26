@@ -1,8 +1,6 @@
-package com.ydh.todoapprooom
+package com.ydh.todoapprooom.data.remote
 
-import com.ydh.todoapprooom.TodoRepository
-import com.ydh.todoapprooom.TodoBodyInsert
-import com.ydh.todoapprooom.TodoModel
+import com.ydh.todoapprooom.model.TodoBodyInsert
 import retrofit2.Call
 import retrofit2.http.*
 

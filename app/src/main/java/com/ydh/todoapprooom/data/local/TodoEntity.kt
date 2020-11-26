@@ -1,8 +1,9 @@
-package com.ydh.todoapprooom
+package com.ydh.todoapprooom.data.local
 
 import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
+import com.ydh.todoapprooom.model.TodoModel
 
 
 @Entity(tableName = "todo")
