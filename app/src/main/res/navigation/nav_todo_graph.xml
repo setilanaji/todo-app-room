@@ -7,7 +7,7 @@
 
     <fragment
         android:id="@+id/todoListFragment"
-        android:name="com.ydh.todoapprooom.view.TodoListFragment"
+        android:name="com.ydh.todoapprooom.view.fragment.TodoListFragment"
         android:label="fragment_todo_list"
         tools:layout="@layout/fragment_todo_list" >
         <action
@@ -16,7 +16,7 @@
     </fragment>
     <fragment
         android:id="@+id/todoDetailFragment"
-        android:name="com.ydh.todoapprooom.view.TodoDetailFragment"
+        android:name="com.ydh.todoapprooom.view.fragment.TodoDetailFragment"
         android:label="fragment_todo_detail"
         tools:layout="@layout/fragment_todo_detail" />
 </navigation>

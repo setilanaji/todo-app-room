@@ -1,9 +1,10 @@
-package com.ydh.todoapprooom
+package com.ydh.todoapprooom.view.adapter
 
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.lifecycle.Lifecycle
 import androidx.viewpager2.adapter.FragmentStateAdapter
+import com.ydh.todoapprooom.model.Page
 
 class ViewPagerAdapter(
     private val listFragment: List<Page>,

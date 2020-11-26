@@ -1,13 +1,11 @@
 package com.ydh.todoapprooom.presenter
 
-import com.ydh.todoapprooom.view.TodoContract
 import com.ydh.todoapprooom.model.TodoModel
 import com.ydh.todoapprooom.data.TodoRepository
 import com.ydh.todoapprooom.data.remote.DeleteTodoResponse
 import com.ydh.todoapprooom.data.remote.InsertResponse
 import com.ydh.todoapprooom.data.remote.TodoResponse
 import com.ydh.todoapprooom.data.remote.UpdateResponse
-import com.ydh.todoapprooom.model.TodoBodyInsert
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -19,7 +17,6 @@ class TodoPresenter(private val view: TodoContract.View, private val repository:
     private val executor by lazy { Executors.newFixedThreadPool(4) }
 
     override fun getAllTodo(list: List<TodoModel>) {
-        println("getallTodo $list")
             repository.getAllTodoOnline().enqueue(object : Callback<TodoResponse> {
                 override fun onResponse(
                     call: Call<TodoResponse>,
@@ -65,7 +62,6 @@ class TodoPresenter(private val view: TodoContract.View, private val repository:
              todo.addAll(repository.getAllTodo())
             view.onSuccessGetAllFavTodo(todo)
         }
-        print("getFav $todo")
         return todo
     }
 
@@ -100,16 +96,6 @@ class TodoPresenter(private val view: TodoContract.View, private val repository:
                 if (response.isSuccessful) {
                     if (response.body() != null) {
                         response.body()?.let {
-//                            val todoEdited = mutableListOf<TodoModel>()
-//
-//                            for (item in it.data){
-//                                for (x in list){
-//                                    if (item.id == x.id ){
-//                                        item.favStatus = true
-//                                    }
-//                                }
-//                                todoEdited.add(item)
-//                            }
                             view.onSuccessInsertTodo(
                                 it.data
                             )

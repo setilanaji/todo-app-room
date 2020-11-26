@@ -1,13 +1,10 @@
-package com.ydh.todoapprooom.view
+package com.ydh.todoapprooom.view.fragment
 
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.recyclerview.widget.ItemTouchHelper
-import androidx.recyclerview.widget.RecyclerView
-import com.ydh.todoapprooom.R
 import com.ydh.todoapprooom.data.TodoRepository
 import com.ydh.todoapprooom.data.local.LocalDB
 import com.ydh.todoapprooom.data.local.TodoDAO
@@ -16,12 +13,12 @@ import com.ydh.todoapprooom.data.remote.TodoClient
 import com.ydh.todoapprooom.data.remote.TodoRemoteRepository
 import com.ydh.todoapprooom.data.remote.TodoService
 import com.ydh.todoapprooom.databinding.FragmentFavoritesBinding
-import com.ydh.todoapprooom.databinding.FragmentTodoListBinding
 import com.ydh.todoapprooom.model.TodoModel
 import com.ydh.todoapprooom.presenter.TodoPresenter
-import com.ydh.todoapprooom.util.SwipeToDelete
+import com.ydh.todoapprooom.presenter.TodoContract
+import com.ydh.todoapprooom.view.adapter.TodoFavAdapter
 
-class FavoritesFragment : Fragment(), TodoContract.View, TodoFavAdapter.TodoListener  {
+class FavoritesFragment : Fragment(), TodoContract.View, TodoFavAdapter.TodoListener {
 
     private val binding by lazy { FragmentFavoritesBinding.inflate(layoutInflater) }
     private val dao: TodoDAO by lazy { LocalDB.getDatabase(requireContext()).dao() }
@@ -61,7 +58,7 @@ class FavoritesFragment : Fragment(), TodoContract.View, TodoFavAdapter.TodoList
 
     override fun onResume() {
         super.onResume()
-       offlinePresenter.getAllFavTodo()
+        offlinePresenter.getAllFavTodo()
     }
 
     override fun onSuccessGetAllTodo(todo: List<TodoModel>) {

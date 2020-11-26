@@ -1,4 +1,4 @@
-package com.ydh.todoapprooom.view
+package com.ydh.todoapprooom.view.fragment
 
 import android.os.Bundle
 import androidx.fragment.app.Fragment

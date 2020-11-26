@@ -1,4 +1,4 @@
-package com.ydh.todoapprooom.view
+package com.ydh.todoapprooom.view.adapter
 
 import android.content.Context
 import android.view.LayoutInflater
@@ -71,7 +71,8 @@ class TodoAdapter(
     }
 
     class MyViewHolder(val itemBinding: ItemTodoBinding,
-                       private val listener: TodoListener) : RecyclerView.ViewHolder(itemBinding.root){
+                       private val listener: TodoListener
+    ) : RecyclerView.ViewHolder(itemBinding.root){
 
         private var binding : ItemTodoBinding? = null
 

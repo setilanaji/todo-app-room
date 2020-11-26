@@ -1,4 +1,4 @@
-package com.ydh.todoapprooom.view
+package com.ydh.todoapprooom.view.fragment
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -19,6 +19,8 @@ import com.ydh.todoapprooom.databinding.FragmentTodoListBinding
 import com.ydh.todoapprooom.model.TodoModel
 import com.ydh.todoapprooom.presenter.TodoPresenter
 import com.ydh.todoapprooom.util.SwipeToDelete
+import com.ydh.todoapprooom.view.adapter.TodoAdapter
+import com.ydh.todoapprooom.presenter.TodoContract
 
 class TodoListFragment : Fragment(), TodoContract.View, TodoAdapter.TodoListener {
 
@@ -29,10 +31,12 @@ class TodoListFragment : Fragment(), TodoContract.View, TodoAdapter.TodoListener
     private val repository: TodoRepository by lazy { TodoRemoteRepository(service) }
     private val offlineRepository: TodoRepository by lazy { TodoRoomRepository(dao) }
     private val presenter: TodoContract.Presenter by lazy { TodoPresenter(this, repository) }
-    private val offlinePresenter: TodoContract.Presenter by lazy { TodoPresenter(
-        this,
-        offlineRepository
-    ) }
+    private val offlinePresenter: TodoContract.Presenter by lazy {
+        TodoPresenter(
+            this,
+            offlineRepository
+        )
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -98,7 +102,9 @@ class TodoListFragment : Fragment(), TodoContract.View, TodoAdapter.TodoListener
     }
 
     override fun onSuccessUpdateTodo(todoModel: TodoModel) {
-        adapter.updateTodo(todoModel)
+        requireActivity().runOnUiThread {
+            adapter.updateTodo(todoModel)
+        }
     }
 
 
@@ -112,6 +118,7 @@ class TodoListFragment : Fragment(), TodoContract.View, TodoAdapter.TodoListener
 
     override fun onChange(todoModel: TodoModel) {
         presenter.updateTodo(todoModel)
+        offlinePresenter.updateFavTodo(todoModel)
     }
 
     override fun onFavClick(todoModel: TodoModel) {

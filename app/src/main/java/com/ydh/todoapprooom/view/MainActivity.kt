@@ -1,14 +1,16 @@
-package com.ydh.todoapprooom
+package com.ydh.todoapprooom.view
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.MenuItem
 import androidx.viewpager2.widget.ViewPager2
+import com.ydh.todoapprooom.model.Page
+import com.ydh.todoapprooom.R
 import com.ydh.todoapprooom.databinding.ActivityMainBinding
-import com.ydh.todoapprooom.view.FavoritesFragment
-import com.ydh.todoapprooom.view.ProfileFragment
-import com.ydh.todoapprooom.view.TodoFragment
-import kotlinx.android.synthetic.main.activity_main.*
+import com.ydh.todoapprooom.view.adapter.ViewPagerAdapter
+import com.ydh.todoapprooom.view.fragment.FavoritesFragment
+import com.ydh.todoapprooom.view.fragment.ProfileFragment
+import com.ydh.todoapprooom.view.fragment.TodoFragment
 
 class MainActivity : AppCompatActivity() {
     lateinit var binding : ActivityMainBinding
@@ -33,7 +35,8 @@ class MainActivity : AppCompatActivity() {
             val pages = listOf(
                 Page("Todo", TodoFragment()),
                 Page("Favorite", FavoritesFragment()),
-                Page("Profile", ProfileFragment()))
+                Page("Profile", ProfileFragment())
+            )
             val adapter = ViewPagerAdapter(pages, supportFragmentManager, lifecycle)
             vpTodo.adapter = adapter
 
