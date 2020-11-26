@@ -29,6 +29,17 @@ class TodoAdapter(
         notifyDataSetChanged()
     }
 
+    fun deleteTodo(id: Long) {
+        val index = todoList.indexOfFirst { it.id == id }
+        if (index != -1) {
+            todoList.removeAt(index)
+            notifyItemRemoved(index)
+        }
+    }
+
+    fun getData(position: Int): TodoModel{
+        return todoList[position]
+    }
 
     fun addTodo(todoModel: TodoModel) {
         todoList.add(0, todoModel)

@@ -1,6 +1,7 @@
 package com.ydh.todoapprooom.data.local
 
 import com.ydh.todoapprooom.data.TodoRepository
+import com.ydh.todoapprooom.data.remote.DeleteTodoResponse
 import com.ydh.todoapprooom.data.remote.TodoResponse
 import com.ydh.todoapprooom.model.TodoModel
 import com.ydh.todoapprooom.model.toEntity
@@ -29,6 +30,18 @@ class TodoRoomRepository(private val dao: TodoDAO): TodoRepository {
     }
 
     override fun getAllTodoOnline(): Call<TodoResponse> {
+        TODO("Not yet implemented")
+    }
+
+    override fun createTodoOnline(product: TodoResponse): Call<TodoResponse> {
+        TODO("Not yet implemented")
+    }
+
+    override fun updateTodoById(product: TodoResponse): Call<TodoResponse> {
+        TODO("Not yet implemented")
+    }
+
+    override fun deleteTodoById(id: Long): Call<DeleteTodoResponse> {
         TODO("Not yet implemented")
     }
 

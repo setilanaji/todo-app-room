@@ -1,12 +1,8 @@
 package com.ydh.todoapprooom.data.remote
 
-import android.content.Context
-import android.util.Log
 import com.ydh.todoapprooom.data.TodoRepository
 import com.ydh.todoapprooom.model.TodoModel
 import retrofit2.Call
-import retrofit2.Callback
-import retrofit2.Response
 
 class TodoRemoteRepository(private val service: TodoService): TodoRepository {
     override fun getAllTodo(): List<TodoModel> {
@@ -50,6 +46,18 @@ class TodoRemoteRepository(private val service: TodoService): TodoRepository {
 
     override fun getAllTodoOnline(): Call<TodoResponse> {
         return  service.getAllTodo()
+    }
+
+    override fun createTodoOnline(product: TodoResponse): Call<TodoResponse> {
+        TODO("Not yet implemented")
+    }
+
+    override fun updateTodoById(product: TodoResponse): Call<TodoResponse> {
+        TODO("Not yet implemented")
+    }
+
+    override fun deleteTodoById(id: Long): Call<DeleteTodoResponse> {
+        return service.deleteTodo(id)
     }
 
 }

@@ -14,4 +14,6 @@ interface TodoService {
         body: TodoBodyInsert
     ): Call<TodoResponse>
 
+    @DELETE("api/v1/todos/{id}")
+    fun deleteTodo(@Path("id") id: Long): Call<DeleteTodoResponse>
 }
