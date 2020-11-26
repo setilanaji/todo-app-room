@@ -18,6 +18,7 @@ interface TodoContract {
         fun getAllFavTodo(): List<TodoModel>
         fun insertFavTodo(todoModel: TodoModel)
         fun deleteFavTodo(todoModel: TodoModel)
+        fun updateFavTodo(todoModel: TodoModel)
         fun insertTodo(task: String)
         fun deleteTodo(todoModel: TodoModel)
         fun updateTodo(todoModel: TodoModel)

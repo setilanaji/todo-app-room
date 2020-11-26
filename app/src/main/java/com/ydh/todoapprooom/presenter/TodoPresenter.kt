@@ -6,6 +6,7 @@ import com.ydh.todoapprooom.data.TodoRepository
 import com.ydh.todoapprooom.data.remote.DeleteTodoResponse
 import com.ydh.todoapprooom.data.remote.InsertResponse
 import com.ydh.todoapprooom.data.remote.TodoResponse
+import com.ydh.todoapprooom.data.remote.UpdateResponse
 import com.ydh.todoapprooom.model.TodoBodyInsert
 import retrofit2.Call
 import retrofit2.Callback
@@ -82,6 +83,13 @@ class TodoPresenter(private val view: TodoContract.View, private val repository:
         }
     }
 
+    override fun updateFavTodo(todoModel: TodoModel) {
+        executor.execute {
+            val todo = repository.updateTodo(todoModel)
+            view.onSuccessUpdateTodo(todo)
+        }
+    }
+
     override fun insertTodo(task: String) {
 
         repository.createTodoOnline(task).enqueue(object : Callback<InsertResponse> {
@@ -151,11 +159,33 @@ class TodoPresenter(private val view: TodoContract.View, private val repository:
 
     override fun updateTodo(todoModel: TodoModel) {
 
+        repository.updateTodoById(todoModel).enqueue(object : Callback<UpdateResponse> {
+            override fun onResponse(
+                call: Call<UpdateResponse>,
+                response: Response<UpdateResponse>
+            ) {
+                if (response.isSuccessful) {
+                    if (response.body() != null) {
+                        response.body()?.let {
+                            view.onSuccessUpdateTodo(
+                                it.data)
+                        }
+                    } else {
+                        Throwable(message = "Responsenya adalah null")
+                    }
+                } else {
+                    Throwable(message = response.message())
+                }
 
-        executor.execute {
-            val todo = repository.updateTodo(todoModel)
-            view.onSuccessUpdateTodo(todo)
-        }    }
+            }
+
+            override fun onFailure(call: Call<UpdateResponse>, t: Throwable) {
+
+            }
+        })
+
+
+    }
 
 
 }

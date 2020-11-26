@@ -37,6 +37,14 @@ class TodoAdapter(
         }
     }
 
+    fun updateTodo(todoModel: TodoModel) {
+        val index = todoList.indexOfFirst { it.id == todoModel.id }
+        if (index != -1) {
+            todoList[index] = todoModel
+            notifyItemChanged(index)
+        }
+    }
+
     fun getData(position: Int): TodoModel{
         return todoList[position]
     }
@@ -74,6 +82,17 @@ class TodoAdapter(
                     listener.onFavClick(itemBinding.todo!!)
                 }else{
                     listener.onDelFavClick(itemBinding.todo!!)
+                }
+            }
+
+            itemBinding.ivStatus.setOnClickListener{
+                val item = itemBinding.todo
+                if (itemBinding.ivStatus.isChecked){
+                    item!!.status = true
+                    listener.onChange(item)
+                }else{
+                    item!!.status = false
+                    listener.onChange(item)
                 }
             }
         }

@@ -4,6 +4,7 @@ import com.ydh.todoapprooom.data.TodoRepository
 import com.ydh.todoapprooom.data.remote.DeleteTodoResponse
 import com.ydh.todoapprooom.data.remote.InsertResponse
 import com.ydh.todoapprooom.data.remote.TodoResponse
+import com.ydh.todoapprooom.data.remote.UpdateResponse
 import com.ydh.todoapprooom.model.TodoModel
 import com.ydh.todoapprooom.model.toEntity
 import retrofit2.Call
@@ -38,8 +39,7 @@ class TodoRoomRepository(private val dao: TodoDAO): TodoRepository {
         TODO("Not yet implemented")
     }
 
-
-    override fun updateTodoById(product: TodoResponse): Call<TodoResponse> {
+    override fun updateTodoById(todo: TodoModel): Call<UpdateResponse> {
         TODO("Not yet implemented")
     }
 

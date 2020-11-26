@@ -84,7 +84,8 @@ class TodoListFragment : Fragment(), TodoContract.View, TodoAdapter.TodoListener
     override fun onSuccessInsertFavTodo(todoModel: TodoModel) {
         requireActivity().runOnUiThread {
             Toast.makeText(context, "new task has been added to fav", Toast.LENGTH_SHORT).show()
-        }    }
+        }
+    }
 
     override fun onSuccessDeleteTodo(id: Long) {
         adapter.deleteTodo(id)
@@ -93,11 +94,13 @@ class TodoListFragment : Fragment(), TodoContract.View, TodoAdapter.TodoListener
     override fun onSuccessDeleteFavTodo(id: Long) {
         requireActivity().runOnUiThread {
             Toast.makeText(context, "task has been deleted", Toast.LENGTH_SHORT).show()
-        }    }
+        }
+    }
 
     override fun onSuccessUpdateTodo(todoModel: TodoModel) {
-        TODO("Not yet implemented")
+        adapter.updateTodo(todoModel)
     }
+
 
     override fun onClick(todoModel: TodoModel) {
         TODO("Not yet implemented")
@@ -108,7 +111,7 @@ class TodoListFragment : Fragment(), TodoContract.View, TodoAdapter.TodoListener
     }
 
     override fun onChange(todoModel: TodoModel) {
-        TODO("Not yet implemented")
+        presenter.updateTodo(todoModel)
     }
 
     override fun onFavClick(todoModel: TodoModel) {

@@ -14,12 +14,14 @@
         android:layout_height="wrap_content"
         >
 
-        <ImageView
+        <CheckBox
             android:id="@+id/ivStatus"
             android:layout_width="48dp"
             android:layout_height="48dp"
             android:padding="8dp"
-            android:src="@drawable/ic_pause_circle"
+            android:button="@null"
+            android:checked="@{todo.status}"
+            android:background="@drawable/selector_done"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toStartOf="@id/tvTodo"
             app:layout_constraintStart_toStartOf="parent"

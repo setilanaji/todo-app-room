@@ -2,6 +2,7 @@ package com.ydh.todoapprooom.data.remote
 
 import com.ydh.todoapprooom.data.TodoRepository
 import com.ydh.todoapprooom.model.TodoBodyInsert
+import com.ydh.todoapprooom.model.TodoBodyUpdate
 import com.ydh.todoapprooom.model.TodoModel
 import retrofit2.Call
 
@@ -30,8 +31,8 @@ class TodoRemoteRepository(private val service: TodoService): TodoRepository {
         return service.insertTodo(TodoBodyInsert(task))
     }
 
-    override fun updateTodoById(product: TodoResponse): Call<TodoResponse> {
-        TODO("Not yet implemented")
+    override fun updateTodoById(todo: TodoModel): Call<UpdateResponse> {
+        return service.updateTodo(todo.id, TodoBodyUpdate(todo.task, todo.status))
     }
 
     override fun deleteTodoById(id: Long): Call<DeleteTodoResponse> {
