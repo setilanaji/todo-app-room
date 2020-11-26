@@ -20,6 +20,10 @@ android {
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
 
+    buildFeatures{
+        dataBinding true
+        viewBinding true
+    }
     buildTypes {
         release {
             minifyEnabled false
@@ -45,7 +49,7 @@ dependencies {
     implementation 'androidx.legacy:legacy-support-v4:1.0.0'
     testImplementation 'junit:junit:4.+'
     androidTestImplementation 'androidx.test.ext:junit:1.1.2'
-    androidTestImplementation 'androidx.test.espresso:espresso-core:3.3.0'
+    androidTestImplementation 'androidx.test.espresso:espresso-corez:3.3.0'
 
     // Lifecycle Android Jetpack
     implementation "androidx.lifecycle:lifecycle-extensions:$lifecycle_version"
