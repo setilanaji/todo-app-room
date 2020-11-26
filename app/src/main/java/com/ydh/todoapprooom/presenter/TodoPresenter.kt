@@ -4,7 +4,9 @@ import com.ydh.todoapprooom.view.TodoContract
 import com.ydh.todoapprooom.model.TodoModel
 import com.ydh.todoapprooom.data.TodoRepository
 import com.ydh.todoapprooom.data.remote.DeleteTodoResponse
+import com.ydh.todoapprooom.data.remote.InsertResponse
 import com.ydh.todoapprooom.data.remote.TodoResponse
+import com.ydh.todoapprooom.model.TodoBodyInsert
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -69,7 +71,7 @@ class TodoPresenter(private val view: TodoContract.View, private val repository:
     override fun insertFavTodo(todoModel: TodoModel) {
         executor.execute {
             val todo = repository.insertTodo(todoModel)
-            view.onSuccessInsertTodo(todo)
+            view.onSuccessInsertFavTodo(todo)
         }
     }
 
@@ -80,8 +82,43 @@ class TodoPresenter(private val view: TodoContract.View, private val repository:
         }
     }
 
-    override fun insertTodo(todoModel: TodoModel) {
+    override fun insertTodo(task: String) {
 
+        repository.createTodoOnline(task).enqueue(object : Callback<InsertResponse> {
+            override fun onResponse(
+                call: Call<InsertResponse>,
+                response: Response<InsertResponse>
+            ) {
+                if (response.isSuccessful) {
+                    if (response.body() != null) {
+                        response.body()?.let {
+//                            val todoEdited = mutableListOf<TodoModel>()
+//
+//                            for (item in it.data){
+//                                for (x in list){
+//                                    if (item.id == x.id ){
+//                                        item.favStatus = true
+//                                    }
+//                                }
+//                                todoEdited.add(item)
+//                            }
+                            view.onSuccessInsertTodo(
+                                it.data
+                            )
+                        }
+                    } else {
+                        Throwable(message = "Responsenya adalah null")
+                    }
+                } else {
+                    Throwable(message = response.message())
+                }
+
+            }
+
+            override fun onFailure(call: Call<InsertResponse>, t: Throwable) {
+
+            }
+        })
     }
 
     override fun deleteTodo(todoModel: TodoModel) {

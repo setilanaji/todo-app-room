@@ -12,7 +12,7 @@ interface TodoService {
      fun insertTodo(
         @Body
         body: TodoBodyInsert
-    ): Call<TodoResponse>
+    ): Call<InsertResponse>
 
     @DELETE("api/v1/todos/{id}")
     fun deleteTodo(@Path("id") id: Long): Call<DeleteTodoResponse>

@@ -78,6 +78,10 @@ class FavoritesFragment : Fragment(), TodoContract.View, TodoFavAdapter.TodoList
         TODO("Not yet implemented")
     }
 
+    override fun onSuccessInsertFavTodo(todoModel: TodoModel) {
+        TODO("Not yet implemented")
+    }
+
     override fun onSuccessDeleteTodo(id: Long) {
         TODO("Not yet implemented")
     }

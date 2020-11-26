@@ -7,6 +7,7 @@ interface TodoContract {
         fun onSuccessGetAllTodo(todo: List<TodoModel>)
         fun onSuccessGetAllFavTodo(todo: List<TodoModel>)
         fun onSuccessInsertTodo(todoModel: TodoModel)
+        fun onSuccessInsertFavTodo(todoModel: TodoModel)
         fun onSuccessDeleteTodo(id: Long)
         fun onSuccessDeleteFavTodo(id: Long)
         fun onSuccessUpdateTodo(todoModel: TodoModel)
@@ -17,7 +18,7 @@ interface TodoContract {
         fun getAllFavTodo(): List<TodoModel>
         fun insertFavTodo(todoModel: TodoModel)
         fun deleteFavTodo(todoModel: TodoModel)
-        fun insertTodo(todoModel: TodoModel)
+        fun insertTodo(task: String)
         fun deleteTodo(todoModel: TodoModel)
         fun updateTodo(todoModel: TodoModel)
     }

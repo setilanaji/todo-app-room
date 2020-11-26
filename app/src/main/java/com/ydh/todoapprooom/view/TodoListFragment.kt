@@ -46,11 +46,16 @@ class TodoListFragment : Fragment(), TodoContract.View, TodoAdapter.TodoListener
                     val pos = viewHolder.adapterPosition
                     val item = adapter.getData(pos)
                     presenter.deleteTodo(item)
+                    onDelFavClick(item)
 
                 }
             }
             val itemTouchHelper = ItemTouchHelper(swipeHandler)
             itemTouchHelper.attachToRecyclerView(rvTodo)
+
+            btnAdd.setOnClickListener {
+                presenter.insertTodo(tieTodo.text.toString())
+            }
         }
 
         return binding.root
@@ -72,11 +77,14 @@ class TodoListFragment : Fragment(), TodoContract.View, TodoAdapter.TodoListener
     }
 
     override fun onSuccessInsertTodo(todoModel: TodoModel) {
-        requireActivity().runOnUiThread {
-            Toast.makeText(context, "new task has been added", Toast.LENGTH_SHORT).show()
-        }
-
+        adapter.addTodo(todoModel)
+        binding.tieTodo.setText("")
     }
+
+    override fun onSuccessInsertFavTodo(todoModel: TodoModel) {
+        requireActivity().runOnUiThread {
+            Toast.makeText(context, "new task has been added to fav", Toast.LENGTH_SHORT).show()
+        }    }
 
     override fun onSuccessDeleteTodo(id: Long) {
         adapter.deleteTodo(id)
